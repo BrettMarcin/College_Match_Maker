@@ -1,10 +1,10 @@
 # College Match Maker
 
 ## Group Members:
-Yao-lung SU
-Yan Li
-Xueyuan Guo
-Brett Marcinkiewicz
+* Yao-lung SU
+* Yan Li
+* Xueyuan Guo
+* Brett Marcinkiewicz
 
 ## Download Code:
 1. Create a directory and clone the repo.
