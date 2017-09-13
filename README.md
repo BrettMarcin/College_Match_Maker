@@ -2,7 +2,6 @@
 
 ## Group Members:
 * Yao-lung SU
-* Yan Li
 * Xueyuan Guo
 * Brett Marcinkiewicz
 
