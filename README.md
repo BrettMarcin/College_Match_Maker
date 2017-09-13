@@ -1,11 +1,16 @@
-# College_Match_Maker
+# College Match Maker
 
-Download Code:
+## Group Members:
+Yao-lung SU
+Yan Li
+Xueyuan Guo
+Brett Marcinkiewicz
 
+## Download Code:
 1. Create a directory and clone the repo.
 ``` git clone  https://github.com/BrettMarcin/College_Match_Maker.git```
 
-Run the code:
+## Run the code:
 1. Download npm
 ⋅⋅* https://www.npmjs.com/get-npm
 2. Download dependencies ``` npm install ```
