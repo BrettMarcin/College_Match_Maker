@@ -15,3 +15,7 @@
 2. Download dependencies ``` npm install ```
 3. Run Server: ``` node index.js ```
 4. Go to a web browser and go to localhost:3000
+
+## Note:
+* You can't edit the master branch directly. Make a new branch and make your edits and make a pull request
+* Important: Once your changes are merged into the master branch, the site will automatically update.

@@ -2,8 +2,51 @@
 <html>
 <head>
     <title>Home</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
 </head>
 <body>
-<h1>College Match Maker</h1>
+<div class="row">
+    <div class="col-md-4">
+        <h1>College Match Maker</h1>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form>
+                    <div class="form-group">
+                        <label for="Size">Size of School</label>
+                        <input type="text" class="form-control" id="Size" aria-describedby="sizeHelp" placeholder="Enter Size">
+                    </div>
+                    <div class="form-group">
+                        <label for="sizeSelect">How important is the size?</label>
+                        <select class="form-control" id="sizeSelect">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                        <small id="sizeHelp" class="form-text text-muted">5 means it is very important</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State of School</label>
+                        <input type="text" class="form-control" id="state" placeholder="Enter State">
+                    </div>
+                    <div class="form-group">
+                        <label for="stateSelect">How important is the size?</label>
+                        <select class="form-control" id="stateSelect">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
