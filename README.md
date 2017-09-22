@@ -24,6 +24,7 @@
 * Postgres
 * Sequelize
 * jQuery
+* Bootstrap
 
 ## Note:
 * You can't edit the master branch directly. Make a new branch and make your edits and make a pull request
