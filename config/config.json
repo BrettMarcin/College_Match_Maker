@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "new_user",
-    "password": "new_user",
+    "password": "new_password",
     "database": "colleges",
     "host": "127.0.0.1",
     "dialect": "postgres"
