@@ -11,6 +11,18 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
+      state: {
+        type: Sequelize.STRING
+      },
+      tuition: {
+        type: Sequelize.INTEGER
+      },
+      rank: {
+        type: Sequelize.INTEGER
+      },
+      students: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
