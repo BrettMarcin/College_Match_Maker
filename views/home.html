@@ -129,7 +129,7 @@
                   <form name="collegeForm">
                      <div class="form-group">
                         <label for="Size">Size of School</label>
-                        <input type="text" class="form-control" id="Size" ng-model="formData.size" ng-required="true" placeholder="Enter Size">
+                        <input type="number" class="form-control" id="Size" ng-model="formData.size" ng-required="true" placeholder="Enter Size">
                      </div>
 
                      <div class="form-group">
@@ -200,8 +200,38 @@
                   </form>
                </div>
             </div>
+             </div>
+             <div ng-if="inputBoxes.size === 2" class="col-md-6">
+                 <div class="panel panel-default">
+                     <div class="panel-body">
+                         <div class="row">
+                             <div class="col-md-6">
+                                 <div class="panel panel-default">
+                                     <div class="panel-body">
+                                         <h2>{{firstCollege.name}}</h2>
+                                         <p>{{firstCollege.state}}</p>
+                                         <p ng-style="{'background-color': getColor(firstCollege.tuition, secCollege.tuition)}">{{firstCollege.tuition}}</p>
+                                         <p ng-style="{'background-color': getColor(firstCollege.rank, secCollege.rank)}">{{firstCollege.rank}}</p>
+                                     </div>
+                                 </div>
+                             </div>
+                             <div class="col-md-6">
+                                 <div class="panel panel-default">
+                                     <div class="panel-body">
+                                         <h2>{{secCollege.name}}</h2>
+                                         <p>{{secCollege.state}}</p>
+                                         <p ng-style="{'background-color': getColor(secCollege.tuition, firstCollege.tuition)}">{{secCollege.tuition}}</p>
+                                         <p ng-style="{'background-color': getColor(secCollege.rank, firstCollege.rank)}">{{secCollege.rank}}</p>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+
          </div>
-      </div>
+
       <div class="row">
          <div class="col-md-6 center">
             <div ng-if="theColleges.length">
@@ -212,14 +242,16 @@
                         <th style="cursor:pointer" ts-criteria="name|lowercase" class="tablesort-sortable">name</th>
                         <th style="cursor:pointer" ts-criteria="tuition|parseInt" class="tablesort-sortable">tuition</th>
                         <th style="cursor:pointer" ts-criteria="state|lowercase" class="tablesort-sortable">state</th>
+                         <th>Compare</th>
                      </tr>
                   </thead>
                   <tbody>
                      <tr ng-repeat="college in theColleges" ts-repeat ts-hide-no-data>
-                        <td>{{college.rank}}</td>
-                        <td>{{college.name}}</td>
-                        <td>{{college.tuition}}</td>
-                        <td>{{college.state}}</td>
+                        <td ng-model="college.rank">{{college.rank}}</td>
+                        <td ng-model="college.name">{{college.name}}</td>
+                        <td ng-model="college.tuition">{{college.tuition}}</td>
+                        <td ng-model="college.state">{{college.state}}</td>
+                         <td><input type="checkbox" ng-click="addChecked(college, $event)" ng-disabled="shouldDisable(college)" /></td>
                      </tr>
                   </tbody>
                </table>

@@ -1,8 +1,4 @@
-.center {
-    float: none;
-    margin-left: auto;
-    margin-right: auto;
-}
+
 
 th.tablesort-sortable {
     -webkit-user-select: none;
@@ -55,8 +51,4 @@ table .tablesort-sortable:hover:after, table .tablesort-asc:after, table .tables
 
 .showIfLast td {
     text-align: center;
-}
-
-.showIfLast td:after {
-    content: "No data";
 }
