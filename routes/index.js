@@ -80,4 +80,8 @@ router.get('/', function(req, res) {
 	res.sendFile(path.join(__dirname + '/../views/home.html'));
 });
 
+router.get('/API', function(req, res) {
+	res.sendFile(path.join(__dirname + '/../views/api.html'));
+});
+
 module.exports = router;
