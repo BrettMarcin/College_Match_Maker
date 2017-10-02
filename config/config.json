@@ -2,14 +2,14 @@
   "development": {
     "username": "new_user",
     "password": "new_password",
-    "database": "da4h7d1laborgq",
+    "database": "colleges",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
     "username": "new_user",
     "password": "new_user",
-    "database": "da4h7d1laborgq",
+    "database": "colleges",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },

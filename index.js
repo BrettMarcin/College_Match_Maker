@@ -15,6 +15,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser());
 app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/views', express.static(path.join(__dirname, '/views')));
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js'));
 app.use('/js', express.static(__dirname + '/node_modules/jquery/dist'));
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
