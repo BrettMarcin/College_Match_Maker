@@ -12,6 +12,80 @@
 </head>
 <body>
 
+<div class="container" ng-controller="mainController">
+    <div class="row">
+        <div class="col-md-6 center">
+            <h1 class="jumbotron text-center">API</h1>
+            <ul>
+                <li><a href="#home">https://college-match-maker.herokuapp.com/ [GET]</a></li>
+                <li><a href="#college_post">https://college-match-maker.herokuapp.com/college [POST]</a></li>
+                <li><a href="#colleges_get_page">https://college-match-maker.herokuapp.com/colleges [GET]</a></li>
+                <li><a href="#colleges_get">https://college-match-maker.herokuapp.com/getColleges [GET]</a></li>
+                <li><a href="#college_get">https://college-match-maker.herokuapp.com/college/{theCollege} [GET]</a></li>
+                <li><a href="#college_delete">https://college-match-maker.herokuapp.com/college/{theCollege} [DELETE]</a></li>
+                <li><a href="#addPost">https://college-match-maker.herokuapp.com/addPost [POST]</a></li>
+                <li><a href="#sendCollegeInfo">https://college-match-maker.herokuapp.com/sendCollegeInfo [POST]</a></li>
+            </ul>
+            <div class="panel panel-default">
+                <div id="home" class="panel-body">
+                    <h4>https://college-match-maker.herokuapp.com/ [GET]</h4>
+                    <p>Will return the home page of the site.</p>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div id="college_post" class="panel-body">
+                    <h4>https://college-match-maker.herokuapp.com/college [POST]</h4>
+                    <p>Add a college to the database.</p>
+                    <p><strong>Example of json being sent:</strong></p>
+                    <p>{ <br/> "name": "umass",<br/> "state": "MA",<br/> "students": 5000,<br/>"tuition": 5000,<br/>"rank": 1<br/>}</p>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div id="colleges_get_page" class="panel-body">
+                    <h4>https://college-match-maker.herokuapp.com/colleges [GET]</h4>
+                    <p>Will return the page that displays all the colleges in the database.</p>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div id="colleges_get" class="panel-body">
+                    <h4>https://college-match-maker.herokuapp.com/getColleges [GET]</h4>
+                    <p>Will return json data of all the college in the database.</p>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div id="college_get" class="panel-body">
+                    <h4>https://college-match-maker.herokuapp.com/college/{theCollege} [GET]</h4>
+                    <p>Will return the json data for one college.</p>
+                    <p>The <strong>theCollege</strong> is a placeholder for the actual college</p>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div id="college_delete" class="panel-body">
+                    <h4>https://college-match-maker.herokuapp.com/college/{theCollege} [DELETE]</h4>
+                    <p>Will delete a certain college in the database.</p>
+                    <p>The <strong>theCollege</strong> is a placeholder for the actual college</p>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div id="addPost" class="panel-body">
+                    <h4>https://college-match-maker.herokuapp.com/addPost [POST]</h4>
+                    <p>Will add a post to a certain colleges form</p>
+                    <p><strong>Example of json being sent:</strong></p>
+                    <p>{ <br/> "schoolName": "umass",<br/> "author": "Brett",<br/> "Topic": "GPA",<br/>"message": "What is the average GPA to go to this school?"<br/>}</p>
+                    </div>
+            </div>
+            <div class="panel panel-default">
+                <div id="sendCollegeInfo" class="panel-body">
+                    <h4>https://college-match-maker.herokuapp.com/sendCollegeInfo [POST]</h4>
+                    <p>Will return a json array of suggested colleges</p>
+                    <p><strong>Example of json being sent:</strong></p>
+                    <p>{ <br/> "size": 5000,<br/> "state": "Arizona",<br/> "tuition": 5000,<br/>}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 <div ng-include="'/views/footer.html'"></div>
 </html>
