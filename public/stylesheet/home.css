@@ -53,7 +53,17 @@ table .tablesort-sortable:hover:after, table .tablesort-asc:after, table .tables
     text-align: center;
 }
 
-footer {
+html{
+    position:relative;
+    min-height: 100%;
+}
+/*Normalize html and body elements,this style is just good to have*/
+html,body{
+    margin:0;
+    padding-bottom:40px;
+}
+
+.footer {
     position: absolute;
     bottom: 0;
     width: 100%;

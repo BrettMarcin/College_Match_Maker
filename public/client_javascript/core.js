@@ -9,7 +9,7 @@ theCollege.controller('mainController', function($scope, $http){
 
 
     $scope.createCollege = function() {
-        $http.post('/sendCollegeInfo')
+        $http.post('/sendCollegeInfo', $scope.formData)
             .then(function (data) {
                 $scope.formData = {}; // clear the form so our user is ready to enter another
                 $scope.theColleges = data.data;
