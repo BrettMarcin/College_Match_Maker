@@ -86,6 +86,11 @@ router.get('/getColleges', function(req, res) {
 	});
 });
 
+router.get('/angular', function(req, res) {
+	res.sendFile(path.join(__dirname + '/../college-web/src/index.html'));
+
+});
+
 router.get('/', function(req, res) {
 	res.sendFile(path.join(__dirname + '/../views/home.html'));
 });
