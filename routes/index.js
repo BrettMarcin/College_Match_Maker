@@ -2,16 +2,12 @@ var express = require('express');
 var router = express.Router();
 var models = require('../models/index');
 const path = require('path');
+var databaseHandler = require('../Objects/databaseHandler');
 
 router.post('/college', function(req, res) {
-	if (req.body.name !== null && req.body.state !== null && req.body.students !== null && req.body.tuition !== null) {
-		models.College.create({
-			name: req.body.name,
-			state: req.body.state,
-			students: req.body.students,
-			tuition: req.body.tuition,
-			rank: req.body.rank
-		}).then(function(college) {
+	var theCollege = databaseHandler.createCollegeObject(req.body);
+	if (theCollege !== null) {
+		models.College.create(theCollege).then(function(college) {
 			res.json(college);
 		}).catch(function(data) {
 			res.json({
@@ -20,9 +16,7 @@ router.post('/college', function(req, res) {
 			});
 		});
 	} else {
-		res.json({
-			'error': 'An attribute was null'
-		});
+		res.json({'error': 'An attribute was null'});
 	}
 });
 
@@ -31,17 +25,23 @@ router.get('/college', function(req, res){
 });
 
 router.get('/college/:theCollege', function(req, res){
-	var collegeOne = {
-		'name': 'Umass',
-		'state': 'MA',
-		'tuition': '1000',
-		'rank': 3
-	};
-	res.json(collegeOne);
+	models.College.findOne({
+		where: {'name' : req.params.theCollege}
+	}).then(function(theCollege){
+		res.json(theCollege.dataValues);
+	}).catch(function(){
+		res.json(null);
+	});
 });
 
 router.delete('/college/:theCollege', function(req, res){
-	console.log(req.params.theCollege);
+	models.College.destroy({
+		where: {'name' : req.params.theCollege}
+	}).then(function(theCollege){
+		res.json({'message': 'sucess'});
+	}).catch(function(error){
+		res.json({'message': 'error', 'messageContent' : error});
+	});
 });
 
 router.get('/colleges', function(req, res){
