@@ -13,8 +13,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
 	extended: false
 }));
+
 app.use(cookieParser());
 app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/college-web', express.static(path.join(__dirname, 'college-web')));
 app.use('/views', express.static(path.join(__dirname, '/views')));
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js'));
 app.use('/js', express.static(__dirname + '/node_modules/jquery/dist'));
@@ -23,7 +25,20 @@ app.use('/js', express.static(__dirname + '/node_modules/angular'));
 app.use('/js', express.static(__dirname + '/node_modules/angular-tablesort/js'));
 app.use('/', routes);
 
-server.listen(process.env.PORT || 3000);
-console.log('Server running');
+// sync() will create all table if they doesn't exist in database
+models.sequelize.sync().then(function () {
+	server.listen(process.env.PORT || 3000);
+	server.on('error', onError);
+	server.on('listening', onListening);
+});
+
+function normalizePort(val) { /* ... */ }
+function onError(error) {
+	console.log('There was an error: ' );
+	console.log(error);
+}
+function onListening() {
+	console.log('Server running');
+}
 
 module.exports = app;
