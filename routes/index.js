@@ -37,7 +37,7 @@ router.get('/college/:theCollege', function(req, res){
 router.delete('/college/:theCollege', function(req, res){
 	models.College.destroy({
 		where: {'name' : req.params.theCollege}
-	}).then(function(theCollege){
+	}).then(function(){
 		res.json({'message': 'sucess'});
 	}).catch(function(error){
 		res.json({'message': 'error', 'messageContent' : error});
@@ -53,7 +53,7 @@ router.post('/addPost', function(req, res){
 });
 
 router.post('/sendCollegeInfo', function(req, res) {
-	models.College.findAll({}).then(function(colleges) {
+	databaseHandler.getSpecificColleges(req.body).then(function(colleges) {
 		res.json(colleges);
 	}).catch(function(data) {
 		res.json({
