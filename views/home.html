@@ -102,8 +102,9 @@
                                      <div class="panel-body">
                                          <h2>{{firstCollege.name}}</h2>
                                          <p>{{firstCollege.state}}</p>
-                                         <p ng-style="{'background-color': getColor(firstCollege.tuition, secCollege.tuition)}">{{firstCollege.tuition}}</p>
-                                         <p ng-style="{'background-color': getColor(firstCollege.rank, secCollege.rank)}">{{firstCollege.rank}}</p>
+                                         <p ng-style="{'background-color': getColor(firstCollege.tuition, secCollege.tuition, true)}">Tuition: {{firstCollege.tuition}}</p>
+                                         <p ng-style="{'background-color': getColor(firstCollege.rank, secCollege.rank, true)}">Rank: {{firstCollege.rank}}</p>
+                                         <p>Students: {{firstCollege.students}}</p>
                                      </div>
                                  </div>
                              </div>
@@ -112,8 +113,9 @@
                                      <div class="panel-body">
                                          <h2>{{secCollege.name}}</h2>
                                          <p>{{secCollege.state}}</p>
-                                         <p ng-style="{'background-color': getColor(secCollege.tuition, firstCollege.tuition)}">{{secCollege.tuition}}</p>
-                                         <p ng-style="{'background-color': getColor(secCollege.rank, firstCollege.rank)}">{{secCollege.rank}}</p>
+                                         <p ng-style="{'background-color': getColor(secCollege.tuition, firstCollege.tuition, true)}">Tuition: {{secCollege.tuition}}</p>
+                                         <p ng-style="{'background-color': getColor(secCollege.rank, firstCollege.rank, true)}">Rank: {{secCollege.rank}}</p>
+                                         <p>Students: {{secCollege.students}}</p>
                                      </div>
                                  </div>
                              </div>
