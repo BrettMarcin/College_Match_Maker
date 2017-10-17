@@ -19,8 +19,31 @@ databaseHandler.prototype.createCollegeObject = function(theBody){
     return theCollege;
 };
 
-databaseHandler.prototype.createCollegeObject = function(theBody){
-    
+databaseHandler.prototype.getSpecificColleges = function(theBody){
+    if(theBody.state === 'N/A'){
+        return models.College.findAll({
+            where: {
+                students: {
+                    $lte: theBody.size // less than or equal to the size
+                },
+                tuition: {
+                    $lte: theBody.tuition // less than or equal to the size
+                }
+            }
+        });
+    } else {
+        return models.College.findAll({
+            where: {
+                students: {
+                    $lte: theBody.size // less than or equal to the size
+                },
+                tuition: {
+                    $lte: theBody.tuition // less than or equal to the size
+                },
+                state: theBody.state
+            }
+        });
+    }
 };
 
 module.exports = new databaseHandler();
