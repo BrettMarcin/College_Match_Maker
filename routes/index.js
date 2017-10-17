@@ -26,17 +26,12 @@ router.post('/college', function(req, res) {
 	}
 });
 
-router.get('/college', function(req, res){
+router.get('/getCollege/:theCollege', function(req, res){
 	res.sendFile(path.join(__dirname + '/../views/college.html'));
 });
 
 router.get('/college/:theCollege', function(req, res){
-	var collegeOne = {
-		'name': 'Umass',
-		'state': 'MA',
-		'tuition': '1000',
-		'rank': 3
-	};
+
 	res.json(collegeOne);
 });
 

@@ -52,3 +52,32 @@ theCollege.controller('mainController', function($scope, $http){
         }
     };
 });
+
+theCollege.controller('collegesController', function($scope, $http){
+    $scope.theColleges = {};
+
+    $scope.loadData = function() {
+        $http.get('/getColleges')
+            .then(function (data) {
+                $scope.theColleges = data.data;
+            })
+            .catch(function (data) {
+                console.log('Error: ' + data);
+            });
+    }
+});
+
+theCollege.controller('collegeController', function($scope, $http){
+    $scope.theCollege = {};
+    var url = $location.absUrl().split('/');
+
+    $scope.loadData = function() {
+        $http.get('/getColleges')
+            .then(function (data) {
+                $scope.theColleges = data.data;
+            })
+            .catch(function (data) {
+                console.log('Error: ' + data);
+            });
+    }
+});
