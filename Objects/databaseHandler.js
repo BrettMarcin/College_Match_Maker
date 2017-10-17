@@ -19,5 +19,8 @@ databaseHandler.prototype.createCollegeObject = function(theBody){
     return theCollege;
 };
 
+databaseHandler.prototype.createCollegeObject = function(theBody){
+    
+};
 
 module.exports = new databaseHandler();

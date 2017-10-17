@@ -21,7 +21,7 @@
                   <form name="collegeForm">
                      <div class="form-group">
                         <label for="Size">Size of School</label>
-                        <input type="number" class="form-control" id="Size" ng-model="formData.size" ng-required="true" placeholder="Enter Size">
+                        <input type="number" class="form-control" id="Size" ng-model="formData.size" ng-required="true" placeholder="Enter Max Size">
                      </div>
 
                      <div class="form-group">
@@ -85,7 +85,7 @@
 
                      <div class="form-group">
                         <label for="Tuition">Tuition</label>
-                        <input type="number" class="form-control" id="Tuition" ng-model="formData.tuition" ng-required="true" placeholder="Enter Tuition">
+                        <input type="number" class="form-control" id="Tuition" ng-model="formData.tuition" ng-required="true" placeholder="Enter Max Tuition">
                      </div>
 
                      <button ng-disabled="collegeForm.$invalid" type="submit" class="btn btn-primary" ng-click="createCollege()">Submit</button>

@@ -37,7 +37,7 @@ router.get('/college/:theCollege', function(req, res){
 router.delete('/college/:theCollege', function(req, res){
 	models.College.destroy({
 		where: {'name' : req.params.theCollege}
-	}).then(function(theCollege){
+	}).then(function(){
 		res.json({'message': 'sucess'});
 	}).catch(function(error){
 		res.json({'message': 'error', 'messageContent' : error});
@@ -53,14 +53,45 @@ router.post('/addPost', function(req, res){
 });
 
 router.post('/sendCollegeInfo', function(req, res) {
-	models.College.findAll({}).then(function(colleges) {
-		res.json(colleges);
-	}).catch(function(data) {
-		res.json({
-			'error': 'There was an error',
-			'errorMessage': data
+	if(req.body.state === 'N/A'){
+		models.College.findAll({
+			where: {
+				students: {
+					$lte: req.body.size // less than or equal to the size
+				},
+				tuition: {
+					$lte: req.body.tuition // less than or equal to the size
+				}
+			}
+		}).then(function(colleges) {
+			res.json(colleges);
+		}).catch(function(data) {
+			res.json({
+				'error': 'There was an error',
+				'errorMessage': data
+			});
 		});
-	});
+	} else {
+		models.College.findAll({
+			where: {
+				students: {
+					$lte: req.body.size // less than or equal to the size
+				},
+				tuition: {
+					$lte: req.body.tuition // less than or equal to the size
+				},
+				state: req.body.state
+			}
+		}).then(function(colleges) {
+			res.json(colleges);
+		}).catch(function(data) {
+			res.json({
+				'error': 'There was an error',
+				'errorMessage': data
+			});
+		});
+	}
+
 });
 
 
