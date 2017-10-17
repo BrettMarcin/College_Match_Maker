@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var College = sequelize.define('College', {
-    name: DataTypes.STRING,
+    name: {type: DataTypes.STRING, allowNull: false, unique: true},
     state: DataTypes.STRING,
     tuition: DataTypes.INTEGER,
     rank: DataTypes.INTEGER,
