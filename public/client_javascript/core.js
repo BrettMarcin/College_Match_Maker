@@ -42,7 +42,12 @@ theCollege.controller('mainController', function($scope, $http){
         }
     };
 
-    $scope.getColor = function(firstNumber, secondNumber) {
+    $scope.getColor = function(firstNumber, secondNumber, lowerNumberGreater) {
+        if (lowerNumberGreater){
+            var temp = firstNumber;
+            firstNumber = secondNumber;
+            secondNumber = temp;
+        }
         if (firstNumber > secondNumber){
             return '#7CFC00';
         } else if (firstNumber < secondNumber) {
@@ -51,4 +56,34 @@ theCollege.controller('mainController', function($scope, $http){
             return 'white';
         }
     };
+});
+
+theCollege.controller('collegesController', function($scope, $http){
+    $scope.theColleges = {};
+
+    $scope.loadData = function() {
+        $http.get('/getColleges')
+            .then(function (data) {
+                $scope.theColleges = data.data;
+            })
+            .catch(function (data) {
+                console.log('Error: ' + data);
+            });
+    }
+});
+
+theCollege.controller('collegeController', function($scope, $http, $location){
+    $scope.theCollege = {};
+    var url = $location.absUrl().split('/');
+    var theCollege = url[url.length - 1];
+
+    $scope.loadData = function() {
+        $http.get('/college/' + theCollege)
+            .then(function (data) {
+                $scope.theCollege = data.data;
+            })
+            .catch(function (data) {
+                console.log('Error: ' + data);
+            });
+    }
 });

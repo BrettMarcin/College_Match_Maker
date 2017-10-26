@@ -20,7 +20,7 @@ router.post('/college', function(req, res) {
 	}
 });
 
-router.get('/college', function(req, res){
+router.get('/getCollege/:theCollege', function(req, res){
 	res.sendFile(path.join(__dirname + '/../views/college.html'));
 });
 
@@ -37,7 +37,7 @@ router.get('/college/:theCollege', function(req, res){
 router.delete('/college/:theCollege', function(req, res){
 	models.College.destroy({
 		where: {'name' : req.params.theCollege}
-	}).then(function(theCollege){
+	}).then(function(){
 		res.json({'message': 'sucess'});
 	}).catch(function(error){
 		res.json({'message': 'error', 'messageContent' : error});
@@ -53,25 +53,14 @@ router.post('/addPost', function(req, res){
 });
 
 router.post('/sendCollegeInfo', function(req, res) {
-	var collegeOne = {
-		'name': 'Umass',
-		'state': 'MA',
-		'tuition': '1000',
-		'rank': 3
-	};
-	var collegeTwo = {
-		'name': 'UNH',
-		'state': 'NH',
-		'tuition': '2000',
-		'rank': 2
-	};
-	var collegeThree = {
-		'name': 'Stanford',
-		'state': 'CA',
-		'tuition': '5000',
-		'rank': 1
-	};
-	res.json([collegeOne, collegeTwo, collegeThree]);
+	databaseHandler.getSpecificColleges(req.body).then(function(colleges) {
+		res.json(colleges);
+	}).catch(function(data) {
+		res.json({
+			'error': 'There was an error',
+			'errorMessage': data
+		});
+	});
 });
 
 
