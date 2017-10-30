@@ -35,7 +35,6 @@ Instructions to set up database:
 * Sockets.io
 * Postgres
 * Sequelize
-* jQuery
 * Bootstrap
 
 ## Powerpoint:

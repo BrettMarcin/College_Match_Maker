@@ -10,10 +10,7 @@ router.post('/college', function(req, res) {
 		models.College.create(theCollege).then(function(college) {
 			res.json(college);
 		}).catch(function(data) {
-			res.json({
-				'error': 'There was an error',
-				'errorMessage': data
-			});
+			res.json({ 'error': 'There was an error', 'errorMessage': data });
 		});
 	} else {
 		res.json({'error': 'An attribute was null'});
@@ -38,7 +35,7 @@ router.delete('/college/:theCollege', function(req, res){
 	models.College.destroy({
 		where: {'name' : req.params.theCollege}
 	}).then(function(){
-		res.json({'message': 'sucess'});
+		res.json({'message': 'success'});
 	}).catch(function(error){
 		res.json({'message': 'error', 'messageContent' : error});
 	});
@@ -56,10 +53,7 @@ router.post('/sendCollegeInfo', function(req, res) {
 	databaseHandler.getSpecificColleges(req.body).then(function(colleges) {
 		res.json(colleges);
 	}).catch(function(data) {
-		res.json({
-			'error': 'There was an error',
-			'errorMessage': data
-		});
+		res.json({ 'error': 'There was an error', 'errorMessage': data });
 	});
 });
 
@@ -68,16 +62,13 @@ router.get('/getColleges', function(req, res) {
 	models.College.findAll({}).then(function(colleges) {
 		res.json(colleges);
 	}).catch(function(data) {
-		res.json({
-			'error': 'There was an error',
-			'errorMessage': data
-		});
+		res.json({'error': 'There was an error', 'errorMessage': data });
 	});
 });
 
 router.get('/angular', function(req, res) {
-	res.sendFile(path.join(__dirname + '/../college-web/src/index.html'));
-
+	res.sendFile(path.join(__dirname + '/../client/dist/index.html'));
+	//res.render('angular.html');
 });
 
 router.get('/', function(req, res) {

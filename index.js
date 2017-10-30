@@ -16,6 +16,10 @@ app.use(bodyParser.urlencoded({
 
 app.use(cookieParser());
 app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/client', express.static(path.join(__dirname, 'client')));
+app.use('/node_modules', express.static(path.join(__dirname, '/node_modules')));
+app.use(express.static(path.join(__dirname, 'client', 'src')));
+app.use(express.static(path.join(__dirname, 'client', 'src', 'app')));
 app.use('/college-web', express.static(path.join(__dirname, 'college-web')));
 app.use('/views', express.static(path.join(__dirname, '/views')));
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js'));
