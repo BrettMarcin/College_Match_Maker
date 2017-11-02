@@ -24,6 +24,7 @@
     "cors": "^2.8.4",
     "ejs": "^2.5.7",
     "express": "^4.15.4",
+    "gulp": "^3.9.1",
     "gulp-live-server": "0.0.31",
     "gulp-wait": "0.0.2",
     "jquery": "^3.2.1",
