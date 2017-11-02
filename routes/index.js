@@ -17,16 +17,15 @@ router.post('/college', function(req, res) {
 	}
 });
 
-router.get('/getCollege/:theCollege', function(req, res){
-	res.sendFile(path.join(__dirname + '/../views/college.html'));
-});
-
 router.get('/college/:theCollege', function(req, res){
 	models.College.findOne({
 		where: {'name' : req.params.theCollege}
 	}).then(function(theCollege){
+		console.log('Got data');
+		console.log(theCollege.dataValues);
 		res.json(theCollege.dataValues);
 	}).catch(function(){
+		console.log('error');
 		res.json(null);
 	});
 });
@@ -39,10 +38,6 @@ router.delete('/college/:theCollege', function(req, res){
 	}).catch(function(error){
 		res.json({'message': 'error', 'messageContent' : error});
 	});
-});
-
-router.get('/colleges', function(req, res){
-	res.sendFile(path.join(__dirname + '/../views/colleges.html'));
 });
 
 router.post('/addPost', function(req, res){
@@ -59,7 +54,7 @@ router.post('/sendCollegeInfo', function(req, res) {
 });
 
 
-router.get('/getColleges', function(req, res) {
+router.get('/colleges', function(req, res) {
 	models.College.findAll({}).then(function(colleges) {
 		res.json(colleges);
 	}).catch(function(data) {
@@ -67,17 +62,8 @@ router.get('/getColleges', function(req, res) {
 	});
 });
 
-router.get('/angular', function(req, res) {
-	res.sendFile(path.join(__dirname + '/../client/dist/index.html'));
-	//res.render('angular.html');
-});
-
 router.get('/', function(req, res) {
 	res.sendFile(path.join(__dirname + '/../client/dist/index.html'));
-});
-
-router.get('/API', function(req, res) {
-	res.sendFile(path.join(__dirname + '/../views/api.html'));
 });
 
 module.exports = router;
