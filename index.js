@@ -32,6 +32,10 @@ app.use('/js', express.static(__dirname + '/node_modules/angular'));
 app.use('/js', express.static(__dirname + '/node_modules/angular-tablesort/js'));
 app.use('/api', routes);
 
+app.get('/*', function(req, res) {
+	res.sendFile(path.join(__dirname + '/client/dist/index.html'));
+});
+
 // sync() will create all table if they doesn't exist in database
 models.sequelize.sync().then(function () {
 	server.listen(process.env.PORT || 3000);
