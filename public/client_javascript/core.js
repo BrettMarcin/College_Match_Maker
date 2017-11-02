@@ -13,6 +13,9 @@ theCollege.controller('mainController', function($scope, $http){
             .then(function (data) {
                 $scope.formData = {}; // clear the form so our user is ready to enter another
                 $scope.theColleges = data.data;
+                $scope.inputBoxes = new Set();
+                $scope.firstCollege = {};
+                $scope.secCollege = {};
             })
             .catch(function (data) {
                 console.log('Error: ' + data);

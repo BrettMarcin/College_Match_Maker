@@ -35,8 +35,10 @@ Instructions to set up database:
 * Sockets.io
 * Postgres
 * Sequelize
-* jQuery
 * Bootstrap
+
+## Powerpoint:
+* https://drive.google.com/file/d/0Bzh3FDJ2wJwZRlBQUENlWVlyZGs/view
 
 ## Note:
 * You can't edit the master branch directly. Make a new branch and make your edits and make a pull request

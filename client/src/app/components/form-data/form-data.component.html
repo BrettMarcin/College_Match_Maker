@@ -1,0 +1,143 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 center text-center">
+      <h1 class="jumbotron text-center">College Match Maker</h1>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+            <div class="form-group">
+              <label for="Size">Size of School</label>
+              <input type="number" class="form-control" name="size" id="Size" placeholder="Enter Max Size" required formControlName="size">
+            </div>
+
+            <div class="form-group">
+              <label for="state" class="control-label center-block">State</label>
+              <select class="form-control" id="state" name="state" name="state" required formControlName="state">
+                <option>N/A</option>
+                <option>Alaska</option>
+                <option>Alabama</option>
+                <option>Arkansas</option>
+                <option>Arizona</option>
+                <option>California</option>
+                <option>Colorado</option>
+                <option>Connecticut</option>
+                <option>District of Columbia</option>
+                <option>Delaware</option>
+                <option>Florida</option>
+                <option>Georgia</option>
+                <option>Hawaii</option>
+                <option>Iowa</option>
+                <option>Idaho</option>
+                <option>Illinois</option>
+                <option>Indiana</option>
+                <option>Kansas</option>
+                <option>Kentucky</option>
+                <option>Louisiana</option>
+                <option>Massachusetts</option>
+                <option>Maryland</option>
+                <option>Maine</option>
+                <option>Michigan</option>
+                <option>Minnesota</option>
+                <option>Missouri</option>
+                <option>Mississippi</option>
+                <option>Montana</option>
+                <option>North Carolina</option>
+                <option>North Dakota</option>
+                <option>Nebraska</option>
+                <option>New Hampshire</option>
+                <option>New Jersey</option>
+                <option>New Mexico</option>
+                <option>Nevada</option>
+                <option>New York</option>
+                <option>Ohio</option>
+                <option>Oklahoma</option>
+                <option>Oregon</option>
+                <option>Pennsylvania</option>
+                <option>Puerto Rico</option>
+                <option>Rhode Island</option>
+                <option>South Carolina</option>
+                <option>South Dakota</option>
+                <option>Tennessee</option>
+                <option>Texas</option>
+                <option>Utah</option>
+                <option>Virginia</option>
+                <option>Vermont</option>
+                <option>Washington</option>
+                <option>Wisconsin</option>
+                <option>West Virginia</option>
+                <option>Wyoming</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="Tuition">Tuition</label>
+              <input  type="number" class="form-control" id="Tuition" name="tuition" placeholder="Enter Max Tuition" required formControlName="tuition">
+            </div>
+
+            <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="checkSize()" class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <h2>{{firstCollege.name}}</h2>
+                  <p>{{firstCollege.state}}</p>
+                  <p ng-style="{'background-color': getColor(firstCollege.tuition, secCollege.tuition, true)}">Tuition: {{firstCollege.tuition}}</p>
+                  <p ng-style="{'background-color': getColor(firstCollege.rank, secCollege.rank, true)}">Rank: {{firstCollege.rank}}</p>
+                  <p>Students: {{firstCollege.students}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <h2>{{secCollege.name}}</h2>
+                  <p>{{secCollege.state}}</p>
+                  <p ng-style="{'background-color': getColor(secCollege.tuition, firstCollege.tuition, true)}">Tuition: {{secCollege.tuition}}</p>
+                  <p ng-style="{'background-color': getColor(secCollege.rank, firstCollege.rank, true)}">Rank: {{secCollege.rank}}</p>
+                  <p>Students: {{secCollege.students}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 center">
+      <div *ngIf="colleges.length > 0">
+        <table class="table table-bordered" ts-wrapper>
+          <thead>
+          <tr>
+            <th style="cursor:pointer">rank</th>
+            <th style="cursor:pointer">name</th>
+            <th style="cursor:pointer">tuition</th>
+            <th style="cursor:pointer">state</th>
+            <th>Compare</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let college of colleges; let in = index">
+            <td>{{college.rank}}</td>
+            <td>{{college.name}}</td>
+            <td>{{college.tuition}}</td>
+            <td>{{college.state}}</td>
+            <td><input #{{college.name}} [(ngModel)]="college.selected" type="checkbox" (change)="checkbox(college)" [disabled]="shouldDisable(college)" /></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div ng-include="'/views/footer.html'"></div>
+

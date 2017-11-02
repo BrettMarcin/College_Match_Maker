@@ -14,12 +14,21 @@
     "body-parser": "^1.18.2",
     "bootstrap": "^3.3.7",
     "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
+    "ejs": "^2.5.7",
     "express": "^4.15.4",
+    "gulp-live-server": "0.0.31",
+    "gulp-wait": "0.0.2",
     "jquery": "^3.2.1",
+    "nodemon": "^1.12.1",
     "path": "^0.12.7",
     "pg": "^7.3.0",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.10.0",
     "sequelize-cli": "^3.0.0"
+  },
+  "devDependencies": {
+    "@angular/cli": "^1.4.9",
+    "gulp": "^3.9.1"
   }
 }

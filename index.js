@@ -7,6 +7,7 @@ const models = require('./models');
 const bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 const routes = require('./routes/index.js');
+var cors = require('cors');
 
 app.use(express.static(__dirname + '/'));
 app.use(bodyParser.json());
@@ -14,8 +15,14 @@ app.use(bodyParser.urlencoded({
 	extended: false
 }));
 
+app.use(cors());
 app.use(cookieParser());
 app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/client/dist/')));
+app.use('/client', express.static(path.join(__dirname, 'client')));
+app.use('/node_modules', express.static(path.join(__dirname, '/node_modules')));
+app.use(express.static(path.join(__dirname, 'client', 'src')));
+app.use(express.static(path.join(__dirname, 'client', 'src', 'app')));
 app.use('/college-web', express.static(path.join(__dirname, 'college-web')));
 app.use('/views', express.static(path.join(__dirname, '/views')));
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js'));
@@ -23,7 +30,7 @@ app.use('/js', express.static(__dirname + '/node_modules/jquery/dist'));
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 app.use('/js', express.static(__dirname + '/node_modules/angular'));
 app.use('/js', express.static(__dirname + '/node_modules/angular-tablesort/js'));
-app.use('/', routes);
+app.use('/api', routes);
 
 // sync() will create all table if they doesn't exist in database
 models.sequelize.sync().then(function () {
