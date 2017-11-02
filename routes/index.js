@@ -50,6 +50,7 @@ router.post('/addPost', function(req, res){
 });
 
 router.post('/sendCollegeInfo', function(req, res) {
+	console.log('called');
 	databaseHandler.getSpecificColleges(req.body).then(function(colleges) {
 		res.json(colleges);
 	}).catch(function(data) {
@@ -72,7 +73,7 @@ router.get('/angular', function(req, res) {
 });
 
 router.get('/', function(req, res) {
-	res.sendFile(path.join(__dirname + '/../views/home.html'));
+	res.sendFile(path.join(__dirname + '/../client/dist/index.html'));
 });
 
 router.get('/API', function(req, res) {
