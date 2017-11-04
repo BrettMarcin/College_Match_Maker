@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({
 app.use(cors());
 app.use(cookieParser());
 app.use('/public', express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, '/client/dist/')));
+app.use(express.static(path.join(__dirname, '/client/dist')));
 app.use('/client', express.static(path.join(__dirname, 'client')));
 app.use('/node_modules', express.static(path.join(__dirname, '/node_modules')));
 app.use(express.static(path.join(__dirname, 'client', 'src')));
