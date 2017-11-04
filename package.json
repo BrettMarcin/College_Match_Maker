@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "gulp"
+    "start": "node index.js",
+    "postinstall": "gulp"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@angular/animations": "^4.2.4",
+    "@angular/cli": "^1.4.9",
     "@angular/common": "^4.2.4",
     "@angular/compiler": "^4.2.4",
     "@angular/core": "^4.2.4",
