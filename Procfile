@@ -1,1 +1,1 @@
-web: npm start && npm postinstall
+web: node index.js
