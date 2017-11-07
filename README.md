@@ -5,6 +5,15 @@
 * Xueyuan Guo
 * Brett Marcinkiewicz
 
+##Development:
+* After you download the source code make sure you do a few things
+1. Make sure you configure your local database right, look below on how to do that.
+2. Make sure the under models/index.js that you are running var env = to the 'development'
+3. Download dependencies ``` npm install ```
+4. If you wish to just work on the front-end (Angular 4) go to the client/ directory and run ``` ng serve --proxy-config proxy.config.json ```
+5. The back-end is not running so you need to run ``` node index.js ``` in another terminal window in the base directory of the project
+6. Go to a web browser and go to localhost:4200
+
 ## Download Code:
 1. Create a directory and clone the repo.
 ``` git clone  https://github.com/BrettMarcin/College_Match_Maker.git```
@@ -29,14 +38,16 @@ Instructions to set up database:
 4. Go to a web browser and go to localhost:3000
 
 ## Technologies:
-* Angular.js
+* Angular 4
 * Node.js
 * Express.js
 * Sockets.io
 * Postgres
 * Sequelize
-* jQuery
-* Bootstrap
+* Bootstrap 4
+
+## Powerpoint:
+* https://drive.google.com/file/d/0Bzh3FDJ2wJwZRlBQUENlWVlyZGs/view
 
 ## Note:
 * You can't edit the master branch directly. Make a new branch and make your edits and make a pull request
