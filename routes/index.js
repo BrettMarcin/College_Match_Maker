@@ -21,8 +21,6 @@ router.get('/college/:theCollege', function(req, res){
 	models.College.findOne({
 		where: {'name' : req.params.theCollege}
 	}).then(function(theCollege){
-		console.log('Got data');
-		console.log(theCollege.dataValues);
 		res.json(theCollege.dataValues);
 	}).catch(function(){
 		console.log('error');
@@ -45,7 +43,6 @@ router.post('/addPost', function(req, res){
 });
 
 router.post('/sendCollegeInfo', function(req, res) {
-	console.log('called');
 	databaseHandler.getSpecificColleges(req.body).then(function(colleges) {
 		res.json(colleges);
 	}).catch(function(data) {
@@ -60,6 +57,33 @@ router.get('/colleges', function(req, res) {
 	}).catch(function(data) {
 		res.json({'error': 'There was an error', 'errorMessage': data });
 	});
+});
+
+router.get('/checkUsername', function(req, res) {
+	models.User.findAndCount({
+		where: {'userName' : req.params.name}
+	}).then(function(theCount){
+		console.log(theCount);
+		res.json(theCount);
+	}).catch(function(){
+		console.log('error');
+		res.json(null);
+	});
+});
+
+router.get('/getCertainColleges', function(req, res){
+	if(req.query.search !== '') {
+		models.College.findAll({
+			where: {'name': {$like: '%' + req.query.search + '%' }},
+			limit: 5
+		}).then(function (colleges) {
+			res.json(colleges);
+		}).catch(function (data) {
+			res.json({'error': 'There was an error', 'errorMessage': data});
+		});
+	} else {
+		res.json(null);
+	}
 });
 
 module.exports = router;

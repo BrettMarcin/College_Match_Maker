@@ -12,12 +12,16 @@ import { CollegeService } from './services/college.service';
 import { CollegesPageComponent } from './components/colleges-page/colleges-page.component';
 import { CollegeComponent } from './components/college/college.component';
 import { ApiComponent } from './components/api/api.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { UserService } from './services/user.service';
 
 const appRoutes: Routes = [
   {path:'', component:FormDataComponent},
   {path:'colleges', component:CollegesPageComponent},
   {path:'college/:theCollege', component:CollegeComponent},
-  {path:'API_1.0', component:ApiComponent}
+  {path:'API_1.0', component:ApiComponent},
+  {path:'sign-up', component:SignUpComponent}
 ];
 
 @NgModule({
@@ -26,7 +30,9 @@ const appRoutes: Routes = [
     FormDataComponent,
     CollegesPageComponent,
     CollegeComponent,
-    ApiComponent
+    ApiComponent,
+    NavBarComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +42,8 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
-    CollegeService
+    CollegeService,
+    UserService
   ],
   bootstrap: [AppComponent]
 })
