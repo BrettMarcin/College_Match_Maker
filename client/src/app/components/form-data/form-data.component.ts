@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgModule, OnInit } from '@angular/core';
 import { College } from '../../models/college.interface';
 import { CollegeService } from '../../services/college.service';
 import { FormGroup, FormControl, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
