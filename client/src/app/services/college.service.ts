@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { College } from '../models/college.interface'
-import { Http } from '@angular/http';
-import { Headers, RequestOptions } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import { Http, Headers, RequestOptions } from '@angular/http';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/switchMap';
 
 @Injectable()
 export class CollegeService {
@@ -32,6 +36,15 @@ export class CollegeService {
     let headers = new Headers({ 'content-type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     return this.http.get('/api/college/' + theCollege, options)
+      .map(response => {
+        return response.json();
+      });
+  }
+
+  getCertainColleges(theCollege: string){
+    let headers = new Headers({ 'content-type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.get('/api/getCertainColleges?search=' + theCollege, options)
       .map(response => {
         return response.json();
       });

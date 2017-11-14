@@ -2,11 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { College } from '../../models/college.interface';
 import { CollegeService } from '../../services/college.service';
 import { FormGroup, FormControl, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
+
+
 
 @Component({
   selector: 'app-form-data',
   templateUrl: './form-data.component.html',
-  styleUrls: ['./form-data.component.css']
+  styleUrls: ['./form-data.component.css'],
+  providers: [Title]
 })
 export class FormDataComponent implements OnInit {
 
@@ -20,8 +24,9 @@ export class FormDataComponent implements OnInit {
   firstCollege:College;
   secCollege:College;
 
-  constructor(fb: FormBuilder, collegeService: CollegeService) {
+  constructor(fb: FormBuilder, collegeService: CollegeService, private title: Title) {
     this.collegeService = collegeService;
+    this.title.setTitle('Home');
     this.form = fb.group({
       "size": this.size,
       "state": this.state,

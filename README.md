@@ -5,7 +5,7 @@
 * Xueyuan Guo
 * Brett Marcinkiewicz
 
-##Development:
+## Development:
 * After you download the source code make sure you do a few things
 1. Make sure you configure your local database right, look below on how to do that.
 2. Make sure the under models/index.js that you are running var env = to the 'development'

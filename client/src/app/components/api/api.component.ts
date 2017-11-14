@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-api',
@@ -17,7 +18,9 @@ export class ApiComponent implements OnInit {
   college_delete:string = 'https://college-match-maker.herokuapp.com/college/{theCollege} [DELETE]';
 
 
-  constructor() { }
+  constructor(private title: Title) {
+    this.title.setTitle('API');
+  }
 
   ngOnInit() {
   }
