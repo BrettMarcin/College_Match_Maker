@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { User } from '../../models/user.interface';
+import { UserService } from '../../services/user.service';
 import { Title } from '@angular/platform-browser';
+import { Http, Headers, RequestOptions } from '@angular/http'
 
 @Component({
   selector: 'app-sign-up',
@@ -15,9 +17,12 @@ export class SignUpComponent implements OnInit {
   email = new FormControl("", [Validators.required, Validators.email]);
   password = new FormControl("", [Validators.required, Validators.minLength(5), this.checkIfPasswordIsValid]);
   password_confirm = new FormControl("", [Validators.required, Validators.minLength(5)]);
+  userTaken:boolean = true;
   submitted: boolean;
+  //userService: UserService;
 
-  constructor(private fb: FormBuilder, private title: Title) {
+  constructor(private fb: FormBuilder, private title: Title, private userService: UserService, private http:Http) {
+    //this.userService = userService;
     this.title.setTitle('Sign-up');
     this.form = fb.group({
       "username": this.username,
@@ -31,9 +36,7 @@ export class SignUpComponent implements OnInit {
     this.submitted = false;
   }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() { }
 
   save(model: User, isValid: boolean) {
     this.submitted = true;
@@ -63,9 +66,30 @@ export class SignUpComponent implements OnInit {
       }
   }
 
-  checkValidUsername(fieldControl: FormControl) {
-    let userName = fieldControl.value;
-    
+  checkValidUser(userName: string){
+      let headers = new Headers({ 'content-type': 'application/json' });
+      let options = new RequestOptions({ headers: headers });
+      return this.http.get('/api/checkUserName?theUser=' + userName, options)
+        .map(response => {
+          return response.json();
+        });
   }
+
+  checkValidUserControl(fieldControl: FormControl) {
+    console.log('Called');
+    let userName = fieldControl.value;
+    var theResult = false;
+    this.checkValidUser(userName).subscribe(
+      data => {
+        theResult = data;
+      }
+    );
+    if (theResult) {
+      return null;
+    } else {
+      return {userNameValid: true};
+    }
+  }
+
 
 }

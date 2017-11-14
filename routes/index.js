@@ -60,15 +60,18 @@ router.get('/colleges', function(req, res) {
 });
 
 router.get('/checkUsername', function(req, res) {
-	models.User.findAndCount({
-		where: {'userName' : req.params.name}
-	}).then(function(theCount){
-		console.log(theCount);
-		res.json(theCount);
-	}).catch(function(){
-		console.log('error');
+	if(req.query.theUser !== '') {
+		models.User.findAndCount({
+			where: {'userName': req.query.theUser}
+		}).then(function (theCount) {
+			res.json({'theCount' : theCount});
+		}).catch(function () {
+			console.log('error');
+			res.json(null);
+		});
+	} else {
 		res.json(null);
-	});
+	}
 });
 
 router.get('/getCertainColleges', function(req, res){

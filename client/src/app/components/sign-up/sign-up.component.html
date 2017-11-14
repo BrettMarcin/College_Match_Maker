@@ -16,6 +16,7 @@
               <div class="alert alert-danger col-md-4" [hidden]="form.controls.username.valid || (form.controls.username.pristine && !submitted)">
                 <div [hidden]="!username.hasError('minlength')"> Name is required (minimum 5 characters).</div>
                 <div [hidden]="!username.hasError('required')"> Username is required </div>
+                <div [hidden]="!username.hasError('userNameValid')"> Username is already taken </div>
               </div>
               <p class="help-block">Username can contain any letters or numbers, without spaces</p>
             </div>

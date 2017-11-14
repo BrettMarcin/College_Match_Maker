@@ -10,7 +10,7 @@ export class UserService {
   checkUserName(theName: string){
     let headers = new Headers({ 'content-type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post('/api/sendCollegeInfo', {name: theName},options)
+    return this.http.get('/api/checkUserName?theUser=' + theName, options)
       .map(response => {
         return response.json();
       });
