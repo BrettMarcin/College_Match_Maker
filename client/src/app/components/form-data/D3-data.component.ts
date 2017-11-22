@@ -1,15 +1,22 @@
-import { Component, NgModule, OnInit } from '@angular/core';
+import { Component, NgModule, OnInit, ElementRef,AfterViewInit, ViewChild } from '@angular/core';
 import { College } from '../../models/college.interface';
 import { CollegeService } from '../../services/college.service';
 import { FormGroup, FormControl, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 
+import * as d3 from 'd3-selection';
+import * as d3Scale from 'd3-scale';
+import * as d3Array from 'd3-array';
+import * as d3Axis from 'd3-axis';
+import { STATISTICS } from './test_d3_data';
 @Component({
   selector: 'app-form-data',
-  templateUrl: './form-data.component.html',
+  template: `
+    <svg width="960" height="500"></svg>
+  `,
   styleUrls: ['./form-data.component.css']
 })
-export class FormDataComponent implements OnInit {
-
+export class D3DataComponent implements AfterViewInit {
+  @ViewChild("containerD3") element: ElementRef;
   inputBoxes:Map<string, College> = new Map();
   form: FormGroup;
   colleges:College[] = [];
@@ -20,6 +27,14 @@ export class FormDataComponent implements OnInit {
   firstCollege:College;
   secCollege:College;
 
+  private width: number;
+  private height: number;
+  private margin = {top: 20, right: 20, bottom: 30, left: 40};
+
+  private x: any;
+  private y: any;
+  private svg: any;
+  private g: any;
 
   constructor(fb: FormBuilder, collegeService: CollegeService) {
     this.collegeService = collegeService;
@@ -29,48 +44,13 @@ export class FormDataComponent implements OnInit {
       "tuition": this.tuition
     });
   }
-
-  ngOnInit() {
+  ngAfterViewInit() {
+      this.initSvg();
+      this.initAxis();
+      this.drawAxis();
+      this.drawBars();
   }
 
-  checkSize() : boolean {
-    return this.inputBoxes.size === 2;
-  }
-
-  checkbox(theCollege:College){
-    if (this.inputBoxes.has(theCollege.name)){
-      this.inputBoxes.delete(theCollege.name);
-    } else if(this.inputBoxes.size < 2) {
-      this.inputBoxes.set(theCollege.name, theCollege);
-    }
-    if (this.inputBoxes.size === 2){
-      var collegeArray = Array.from(this.inputBoxes);
-      this.firstCollege = collegeArray[0][1];
-      this.secCollege = collegeArray[1][1];
-    }
-  }
-
-  shouldDisable(theCollege:College) : boolean {
-    if (this.inputBoxes.size === 2){
-      if(this.inputBoxes.has(theCollege.name)){
-        return false;
-      } else {
-        return true;
-      }
-    }
-  }
-
-  onSubmit(theCollege: College) {
-    this.inputBoxes.clear();
-    this.firstCollege = null;
-    this.secCollege = null;
-    this.collegeService.sendCollegeInfo(theCollege).subscribe(
-      data => {
-        this.colleges = data;
-      }
-    );
-  }
-  /*
   private initSvg() {
     this.svg = d3.select("svg");
     this.width = +this.svg.attr("width") - this.margin.left - this.margin.right;
@@ -113,5 +93,4 @@ export class FormDataComponent implements OnInit {
           .attr("width", this.x.bandwidth())
           .attr("height", (d) => this.height - this.y(d.frequency) );
   }
-  */
 }
