@@ -1,14 +1,20 @@
-import { Component, NgModule, OnInit } from '@angular/core';
+import { Component, NgModule, OnInit, AfterViewInit,AfterViewChecked } from '@angular/core';
 import { College } from '../../models/college.interface';
 import { CollegeService } from '../../services/college.service';
 import { FormGroup, FormControl, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import * as d3 from 'd3-selection';
+import * as d3Scale from 'd3-scale';
+import * as d3Array from 'd3-array';
+import * as d3Axis from 'd3-axis';
+
+
 
 @Component({
   selector: 'app-form-data',
   templateUrl: './form-data.component.html',
   styleUrls: ['./form-data.component.css']
 })
-export class FormDataComponent implements OnInit {
+export class FormDataComponent implements AfterViewChecked {
 
   inputBoxes:Map<string, College> = new Map();
   form: FormGroup;
@@ -20,19 +26,36 @@ export class FormDataComponent implements OnInit {
   firstCollege:College;
   secCollege:College;
 
+  private width: number;
+  private height: number;
+  private margin = {top: 20, right: 20, bottom: 30, left: 40};
 
-  constructor(fb: FormBuilder, collegeService: CollegeService) {
+  testd=[4000, 5000, 6000,7000,1000];
+  testid=['Tom', 'John', 'Bill','jjj', 'Kay'];
+
+  private x: any;
+  private y: any;
+  private svg: any;
+  private g: any;
+  private color: any;
+
+  title = 'Colleges Chart!';
+  constructor(fb: FormBuilder, collegeService: CollegeService,) {
     this.collegeService = collegeService;
     this.form = fb.group({
       "size": this.size,
       "state": this.state,
-      "tuition": this.tuition
+      "tuition": this.tuition,
+
     });
   }
 
-  ngOnInit() {
+  ngAfterViewChecked(){
+    this.initSvg();
+    this.initAxis();
+    this.drawAxis();
+    this.drawBars();
   }
-
   checkSize() : boolean {
     return this.inputBoxes.size === 2;
   }
@@ -70,8 +93,10 @@ export class FormDataComponent implements OnInit {
       }
     );
   }
-  /*
+
   private initSvg() {
+    this.color = d3Scale.scaleOrdinal()
+                        .range(["#98abc5"]);
     this.svg = d3.select("svg");
     this.width = +this.svg.attr("width") - this.margin.left - this.margin.right;
     this.height = +this.svg.attr("height") - this.margin.top - this.margin.bottom;
@@ -82,8 +107,8 @@ export class FormDataComponent implements OnInit {
   private initAxis() {
     this.x = d3Scale.scaleBand().rangeRound([0, this.width]).padding(0.1);
     this.y = d3Scale.scaleLinear().rangeRound([this.height, 0]);
-    this.x.domain(STATISTICS.map((d) => d.letter));
-    this.y.domain([0, d3Array.max(STATISTICS, (d) => d.frequency)]);
+    this.x.domain(this.colleges.map((d) => d.name));
+    this.y.domain([0, d3Array.max(this.colleges, (d) => d.tuition)]);
   }
 
   private drawAxis() {
@@ -93,7 +118,7 @@ export class FormDataComponent implements OnInit {
           .call(d3Axis.axisBottom(this.x));
     this.g.append("g")
           .attr("class", "axis axis--y")
-          .call(d3Axis.axisLeft(this.y).ticks(10, "%"))
+          .call(d3Axis.axisLeft(this.y).ticks(10))
           .append("text")
           .attr("class", "axis-title")
           .attr("transform", "rotate(-90)")
@@ -105,13 +130,13 @@ export class FormDataComponent implements OnInit {
 
   private drawBars() {
     this.g.selectAll(".bar")
-          .data(STATISTICS)
+          .data(this.colleges)
           .enter().append("rect")
           .attr("class", "bar")
-          .attr("x", (d) => this.x(d.letter) )
-          .attr("y", (d) => this.y(d.frequency) )
+          .attr("x", (d) => this.x(d.name) )
+          .attr("y", (d) => this.y(d.tuition) )
           .attr("width", this.x.bandwidth())
-          .attr("height", (d) => this.height - this.y(d.frequency) );
+          .attr("height", (d) => this.height - this.y(d.tuition))
+          .style("fill", (d: any) => this.color(d.tuition) );
   }
-  */
 }
