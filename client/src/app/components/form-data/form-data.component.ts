@@ -28,9 +28,10 @@ export class FormDataComponent implements AfterViewChecked {
 
   private width: number;
   private height: number;
-  private margin = {top: 20, right: 20, bottom: 30, left: 40};
+  private margin = {top: 20, right: 20, bottom: 60, left: 70};
 
   log = 'bar';
+  log2 = 'tuition';
 
   private x: any;
   private y: any;
@@ -53,19 +54,30 @@ export class FormDataComponent implements AfterViewChecked {
   }
 
   ngAfterViewChecked(){
-    if(this.log == 'bar'){
-      d3.selectAll("svg > *").remove();
+    d3.selectAll("svg > *").remove();
+    if(this.log == 'bar' && this.log2 == 'tuition'){
       this.initSvg();
       this.initAxis();
       this.drawAxis();
       this.drawBars();
     }
-    else if(this.log == 'line'){
-      d3.selectAll("svg > *").remove();
+    else if(this.log == 'line' && this.log2 == 'tuition'){
       this.initSvg2();
       this.initAxis2();
       this.drawAxis2();
       this.drawLine();
+    }
+    else if(this.log == 'bar' && this.log2 == 'students'){
+      this.initSvg();
+      this.initAxis_s();
+      this.drawAxis();
+      this.drawBars_s();
+    }
+    else if(this.log == 'line' && this.log2 == 'students'){
+      this.initSvg2();
+      this.initAxis2_s();
+      this.drawAxis2();
+      this.drawLine_s();
     }
   }
 
@@ -123,7 +135,12 @@ export class FormDataComponent implements AfterViewChecked {
     this.x.domain(this.colleges.map((d) => d.name));
     this.y.domain([0, d3Array.max(this.colleges, (d) => d.tuition)]);
   }
-
+  private initAxis_s() {
+    this.x = d3Scale.scaleBand().rangeRound([0, this.width]).padding(0.1);
+    this.y = d3Scale.scaleLinear().rangeRound([this.height, 0]);
+    this.x.domain(this.colleges.map((d) => d.name));
+    this.y.domain([0, d3Array.max(this.colleges, (d) => d.students)]);
+  }
   private drawAxis() {
     this.g.append("g")
           .attr("class", "axis axis--x")
@@ -133,12 +150,12 @@ export class FormDataComponent implements AfterViewChecked {
           .attr("class", "axis axis--y")
           .call(d3Axis.axisLeft(this.y).ticks(10))
           .append("text")
-          .attr("class", "axis-title")
           .attr("transform", "rotate(-90)")
-          .attr("y", 6)
-          .attr("dy", "0.71em")
-          .attr("text-anchor", "end")
-          .text("Tuition");
+          .attr("y", 0 - this.margin.left)
+          .attr("x",0 - (this.height / 2))
+          .attr("dy", "1em")
+          .style("text-anchor", "middle")
+          .text("Value");
   }
 
   private drawBars() {
@@ -153,6 +170,18 @@ export class FormDataComponent implements AfterViewChecked {
           .style("fill", (d: any) => this.color(d.tuition) );
   }
 
+  private drawBars_s() {
+    this.g.selectAll(".bar")
+          .data(this.colleges)
+          .enter().append("rect")
+          .attr("class", "bar")
+          .attr("x", (d) => this.x(d.name) )
+          .attr("y", (d) => this.y(d.students) )
+          .attr("width", this.x.bandwidth())
+          .attr("height", (d) => this.height - this.y(d.students))
+          .style("fill", (d: any) => this.color(d.students) );
+  }
+
   private initSvg2() {
     this.svg = d3.select("svg")
                  .append("g")
@@ -164,7 +193,12 @@ export class FormDataComponent implements AfterViewChecked {
     this.y = d3Scale.scaleLinear().range([this.height, 0]);
     this.x.domain(this.colleges.map((d) => d.name));
     this.y.domain([0, d3Array.max(this.colleges, (d) => d.tuition)]);
-
+  }
+  private initAxis2_s() {
+    this.x = d3Scale.scaleBand().rangeRound([0, this.width]).padding(1.0);
+    this.y = d3Scale.scaleLinear().range([this.height, 0]);
+    this.x.domain(this.colleges.map((d) => d.name));
+    this.y.domain([0, d3Array.max(this.colleges, (d) => d.students)]);
   }
 
   private drawAxis2() {
@@ -183,7 +217,7 @@ export class FormDataComponent implements AfterViewChecked {
           .attr("y", 6)
           .attr("dy", ".71em")
           .style("text-anchor", "end")
-          .text("tuition");
+          .text("Tuition");
   }
 
   private drawLine() {
@@ -199,10 +233,25 @@ export class FormDataComponent implements AfterViewChecked {
             .attr("stroke-linecap", "round")
             .attr("stroke-width", 1.5)
             .attr("d", this.line);
-
   }
+  private drawLine_s() {
+     this.line = d3Shape.line()
+                        .x( (d) => this.x(d.name) )
+                        .y( (d) => this.y(d.students) );
 
+    this.svg.append("path")
+            .datum(this.colleges)
+            .attr("fill", "none")
+            .attr("stroke", "steelblue")
+            .attr("stroke-linejoin", "round")
+            .attr("stroke-linecap", "round")
+            .attr("stroke-width", 1.5)
+            .attr("d", this.line);
+  }
   logRadio(element: HTMLInputElement): void {
     this.log = `${element.value}`;
+  }
+  logRadio2(element: HTMLInputElement): void {
+    this.log2 = `${element.value}`;
   }
 }
