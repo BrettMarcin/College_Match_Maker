@@ -23,6 +23,7 @@ export class NavBarComponent implements OnInit {
   endAt = new Subject();
   currentUser:User;
   signInForm: FormGroup;
+  loginError: boolean = false;
 
   startobs = this.startAt.asObservable();
   endobs = this.endAt.asObservable();
@@ -67,11 +68,19 @@ export class NavBarComponent implements OnInit {
     );
   }
 
+  loginClick(){
+    this.loginError = false;
+  }
+
   login(theUser:User){
     this.userService.loginUser(theUser).subscribe(
       data => {
         console.log(data);
-        window.location.reload();
+        if(data.status !== 'failure') {
+          window.location.reload();
+        } else {
+          this.loginError = true;
+        }
         this.userService.getUser().subscribe(
           data => {
             this.currentUser = data;

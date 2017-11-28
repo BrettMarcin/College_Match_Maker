@@ -15,13 +15,16 @@ import { ApiComponent } from './components/api/api.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { UserService } from './services/user.service';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 const appRoutes: Routes = [
   {path:'', component:FormDataComponent},
   {path:'colleges', component:CollegesPageComponent},
   {path:'college/:theCollege', component:CollegeComponent},
   {path:'API_1.0', component:ApiComponent},
-  {path:'sign-up', component:SignUpComponent}
+  {path:'sign-up', component:SignUpComponent},
+  {path:'404', component:NotFoundComponent},
+  {path: '**', redirectTo: '/404'}
 ];
 
 @NgModule({
@@ -32,7 +35,8 @@ const appRoutes: Routes = [
     CollegeComponent,
     ApiComponent,
     NavBarComponent,
-    SignUpComponent
+    SignUpComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
