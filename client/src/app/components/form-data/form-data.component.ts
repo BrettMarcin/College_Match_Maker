@@ -41,7 +41,7 @@ export class FormDataComponent implements AfterViewChecked {
   private line: d3Shape.Line<[number, number]>;
   title = 'Colleges Chart!';
   constructor(fb: FormBuilder, collegeService: CollegeService,) {
-    this.width = 960 - this.margin.left - this.margin.right;
+    this.width = 1200 - this.margin.left - this.margin.right;
     this.height = 500 - this.margin.top - this.margin.bottom;
 
     this.collegeService = collegeService;
@@ -70,13 +70,13 @@ export class FormDataComponent implements AfterViewChecked {
     else if(this.log == 'bar' && this.log2 == 'students'){
       this.initSvg();
       this.initAxis_s();
-      this.drawAxis();
+      this.drawAxis_s();
       this.drawBars_s();
     }
     else if(this.log == 'line' && this.log2 == 'students'){
       this.initSvg2();
       this.initAxis2_s();
-      this.drawAxis2();
+      this.drawAxis2_s();
       this.drawLine_s();
     }
   }
@@ -146,18 +146,45 @@ export class FormDataComponent implements AfterViewChecked {
           .attr("class", "axis axis--x")
           .attr("transform", "translate(0," + this.height + ")")
           .call(d3Axis.axisBottom(this.x));
+    this.g.append("text")
+          .attr("class", "x-label")
+          .attr("x", this.width+20)
+          .attr("y", this.height-10)
+          .style("text-anchor", "end")
+          .text("School");
     this.g.append("g")
           .attr("class", "axis axis--y")
           .call(d3Axis.axisLeft(this.y).ticks(10))
-          .append("text")
+    this.g.append("text")
+          .attr("class", "axis-title")
           .attr("transform", "rotate(-90)")
-          .attr("y", 0 - this.margin.left)
-          .attr("x",0 - (this.height / 2))
-          .attr("dy", "1em")
-          .style("text-anchor", "middle")
-          .text("Value");
+          .attr("y", 6)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("Tuition");
   }
-
+  private drawAxis_s() {
+    this.g.append("g")
+          .attr("class", "axis axis--x")
+          .attr("transform", "translate(0," + this.height + ")")
+          .call(d3Axis.axisBottom(this.x));
+    this.g.append("text")
+          .attr("class", "x-label")
+          .attr("x", this.width+20)
+          .attr("y", this.height-10)
+          .style("text-anchor", "end")
+          .text("School");
+    this.g.append("g")
+          .attr("class", "axis axis--y")
+          .call(d3Axis.axisLeft(this.y).ticks(10))
+    this.g.append("text")
+          .attr("class", "axis-title")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 6)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("Students");
+  }
   private drawBars() {
     this.g.selectAll(".bar")
           .data(this.colleges)
@@ -189,16 +216,16 @@ export class FormDataComponent implements AfterViewChecked {
   }
 
   private initAxis2() {
-    this.x = d3Scale.scaleBand().rangeRound([0, this.width]).padding(1.0);
-    this.y = d3Scale.scaleLinear().range([this.height, 0]);
-    this.x.domain(this.colleges.map((d) => d.name));
-    this.y.domain([0, d3Array.max(this.colleges, (d) => d.tuition)]);
+          this.x = d3Scale.scaleBand().rangeRound([0, this.width]).padding(1.0);
+          this.y = d3Scale.scaleLinear().range([this.height, 0]);
+          this.x.domain(this.colleges.map((d) => d.name));
+          this.y.domain([0, d3Array.max(this.colleges, (d) => d.tuition)]);
   }
   private initAxis2_s() {
-    this.x = d3Scale.scaleBand().rangeRound([0, this.width]).padding(1.0);
-    this.y = d3Scale.scaleLinear().range([this.height, 0]);
-    this.x.domain(this.colleges.map((d) => d.name));
-    this.y.domain([0, d3Array.max(this.colleges, (d) => d.students)]);
+          this.x = d3Scale.scaleBand().rangeRound([0, this.width]).padding(1.0);
+          this.y = d3Scale.scaleLinear().range([this.height, 0]);
+          this.x.domain(this.colleges.map((d) => d.name));
+          this.y.domain([0, d3Array.max(this.colleges, (d) => d.students)]);
   }
 
   private drawAxis2() {
@@ -207,17 +234,45 @@ export class FormDataComponent implements AfterViewChecked {
           .attr("class", "axis axis--x")
           .attr("transform", "translate(0," + this.height + ")")
           .call(d3Axis.axisBottom(this.x));
-
+    this.svg.append("text")
+          .attr("class", "x-label")
+          .attr("x", this.width+20)
+          .attr("y", this.height-10)
+          .style("text-anchor", "end")
+          .text("School");
     this.svg.append("g")
           .attr("class", "axis axis--y")
           .call(d3Axis.axisLeft(this.y))
-          .append("text")
+    this.svg.append("text")
           .attr("class", "axis-title")
           .attr("transform", "rotate(-90)")
           .attr("y", 6)
           .attr("dy", ".71em")
           .style("text-anchor", "end")
           .text("Tuition");
+
+  }
+  private drawAxis2_s() {
+    this.svg.append("g")
+          .attr("class", "axis axis--x")
+          .attr("transform", "translate(0," + this.height + ")")
+          .call(d3Axis.axisBottom(this.x));
+    this.svg.append("text")
+          .attr("class", "x-label")
+          .attr("x", this.width+20)
+          .attr("y", this.height-10)
+          .style("text-anchor", "end")
+          .text("School");
+    this.svg.append("g")
+          .attr("class", "axis axis--y")
+          .call(d3Axis.axisLeft(this.y))
+    this.svg.append("text")
+          .attr("class", "axis-title")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 6)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("Students");
   }
 
   private drawLine() {
