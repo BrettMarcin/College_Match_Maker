@@ -6,7 +6,7 @@ import * as d3 from 'd3-selection';
 import * as d3Scale from 'd3-scale';
 import * as d3Array from 'd3-array';
 import * as d3Axis from 'd3-axis';
-
+import * as d3Shape from 'd3-shape';
 
 
 @Component({
@@ -30,17 +30,19 @@ export class FormDataComponent implements AfterViewChecked {
   private height: number;
   private margin = {top: 20, right: 20, bottom: 30, left: 40};
 
-  testd=[4000, 5000, 6000,7000,1000];
-  testid=['Tom', 'John', 'Bill','jjj', 'Kay'];
+  log = 'bar';
 
   private x: any;
   private y: any;
   private svg: any;
   private g: any;
   private color: any;
-
+  private line: d3Shape.Line<[number, number]>;
   title = 'Colleges Chart!';
   constructor(fb: FormBuilder, collegeService: CollegeService,) {
+    this.width = 960 - this.margin.left - this.margin.right;
+    this.height = 500 - this.margin.top - this.margin.bottom;
+
     this.collegeService = collegeService;
     this.form = fb.group({
       "size": this.size,
@@ -51,11 +53,22 @@ export class FormDataComponent implements AfterViewChecked {
   }
 
   ngAfterViewChecked(){
-    this.initSvg();
-    this.initAxis();
-    this.drawAxis();
-    this.drawBars();
+    if(this.log == 'bar'){
+      d3.selectAll("svg > *").remove();
+      this.initSvg();
+      this.initAxis();
+      this.drawAxis();
+      this.drawBars();
+    }
+    else if(this.log == 'line'){
+      d3.selectAll("svg > *").remove();
+      this.initSvg2();
+      this.initAxis2();
+      this.drawAxis2();
+      this.drawLine();
+    }
   }
+
   checkSize() : boolean {
     return this.inputBoxes.size === 2;
   }
@@ -125,7 +138,7 @@ export class FormDataComponent implements AfterViewChecked {
           .attr("y", 6)
           .attr("dy", "0.71em")
           .attr("text-anchor", "end")
-          .text("Frequency");
+          .text("Tuition");
   }
 
   private drawBars() {
@@ -138,5 +151,58 @@ export class FormDataComponent implements AfterViewChecked {
           .attr("width", this.x.bandwidth())
           .attr("height", (d) => this.height - this.y(d.tuition))
           .style("fill", (d: any) => this.color(d.tuition) );
+  }
+
+  private initSvg2() {
+    this.svg = d3.select("svg")
+                 .append("g")
+                 .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
+  }
+
+  private initAxis2() {
+    this.x = d3Scale.scaleBand().rangeRound([0, this.width]).padding(1.0);
+    this.y = d3Scale.scaleLinear().range([this.height, 0]);
+    this.x.domain(this.colleges.map((d) => d.name));
+    this.y.domain([0, d3Array.max(this.colleges, (d) => d.tuition)]);
+
+  }
+
+  private drawAxis2() {
+
+    this.svg.append("g")
+          .attr("class", "axis axis--x")
+          .attr("transform", "translate(0," + this.height + ")")
+          .call(d3Axis.axisBottom(this.x));
+
+    this.svg.append("g")
+          .attr("class", "axis axis--y")
+          .call(d3Axis.axisLeft(this.y))
+          .append("text")
+          .attr("class", "axis-title")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 6)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("tuition");
+  }
+
+  private drawLine() {
+     this.line = d3Shape.line()
+                        .x( (d) => this.x(d.name) )
+                        .y( (d) => this.y(d.tuition) );
+
+    this.svg.append("path")
+            .datum(this.colleges)
+            .attr("fill", "none")
+            .attr("stroke", "steelblue")
+            .attr("stroke-linejoin", "round")
+            .attr("stroke-linecap", "round")
+            .attr("stroke-width", 1.5)
+            .attr("d", this.line);
+
+  }
+
+  logRadio(element: HTMLInputElement): void {
+    this.log = `${element.value}`;
   }
 }
