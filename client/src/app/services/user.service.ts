@@ -16,4 +16,40 @@ export class UserService {
       });
   }
 
+  signUserUp(theUser: User){
+    let headers = new Headers({ 'content-type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post('/user/register', theUser,options)
+      .map(response => {
+        return response.json();
+      });
+  }
+
+  logout(){
+    let headers = new Headers({ 'content-type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.get('/user/signout',options)
+      .map(response => {
+        return response.json();
+      });
+  }
+
+  getUser(){
+    let headers = new Headers({ 'content-type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.get('/user/currentUser',options)
+      .map(response => {
+        return response.json();
+      });
+  }
+
+  loginUser(theUser: User){
+    let headers = new Headers({ 'content-type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post('/user/signin', theUser,options)
+      .map(response => {
+        return response.json();
+      });
+  }
+
 }

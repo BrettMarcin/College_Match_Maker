@@ -46,4 +46,5 @@ databaseHandler.prototype.getSpecificColleges = function(theBody){
     }
 };
 
+
 module.exports = new databaseHandler();

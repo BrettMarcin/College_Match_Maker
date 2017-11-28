@@ -10,13 +10,14 @@ var session    = require('express-session');
 const routes = require('./routes/index.js');
 var passport   = require('passport');
 var cors = require('cors');
+require('./Objects/passport.js')(passport, models.User);
 
 app.use(express.static(__dirname + '/'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
 	extended: false
 }));
-app.use(session({ secret: 'keyboard cat',resave: true, saveUninitialized:true}));
+app.use(session({ secret: 'keyboard cat', resave: true, saveUninitialized: true}));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -37,6 +38,7 @@ app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 app.use('/js', express.static(__dirname + '/node_modules/angular'));
 app.use('/js', express.static(__dirname + '/node_modules/angular-tablesort/js'));
 app.use('/api', routes);
+app.use('/user', require('./routes/user.js')(passport));
 
 app.get('/*', function(req, res) {
 	res.sendFile(path.join(__dirname + '/client/dist/index.html'));
