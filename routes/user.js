@@ -108,19 +108,6 @@ module.exports = function(passport, user) {
         });
     });
 
-    router.post('/form/comments/:theCollege', checkAuthentication, function(req, res){
-        models.Comment.findAll({
-            where: {'formTitle': req.body.content, 'college' : req.params.theCollege}
-        }).then(function (comments) {
-            res.json(comments);
-        }).catch(function (data) {
-            res.json({'error': 'There was an error', 'errorMessage': data});
-        });
-    } else {
-        res.json(null);
-    }
-    });
-
     function checkAuthentication(req,res,next) {
         if (req.isAuthenticated()) {
             next();
