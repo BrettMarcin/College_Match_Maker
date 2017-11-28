@@ -7,7 +7,7 @@
           <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
             <div class="form-group">
               <label for="Size">Size of School</label>
-              <input type="number" class="form-control" name="size" id="Size" placeholder="Enter Max Size" min="0" required formControlName="size">
+              <input type="number" class="form-control" name="size" id="Size" placeholder="Enter Max Size" required formControlName="size">
             </div>
 
             <div class="form-group">
@@ -71,7 +71,13 @@
 
             <div class="form-group">
               <label for="Tuition">Tuition</label>
-              <input  type="number" class="form-control" id="Tuition" name="tuition" min="0" placeholder="Enter Max Tuition" required formControlName="tuition">
+              <input  type="number" class="form-control" id="Tuition" name="tuition" placeholder="Enter Max Tuition" required formControlName="tuition">
+            </div>
+
+            <div>
+              <label>D3 Style:</label>
+              <input  #r1 type="radio" name="r" value="bar" (change)="logRadio(r1)" [checked]=true> Bar
+              <input  #r2 type="radio" name="r" value="line" (change)="logRadio(r2)" > Line
             </div>
 
             <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Submit</button>
@@ -139,5 +145,14 @@
     </div>
   </div>
 </div>
-<div ng-include="'/views/footer.html'"></div>
 
+<div *ngIf="colleges.length > 0">
+  <div class="col-md-6 center">
+    <svg width="960" height="600"></svg>
+  </div>
+</div>
+
+
+
+
+<div ng-include="'/views/footer.html'"></div>

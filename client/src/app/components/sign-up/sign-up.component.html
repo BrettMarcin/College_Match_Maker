@@ -3,20 +3,51 @@
     <div class="col-sm-6 col-sm-offset-3">
       <div class="panel panel-default">
         <div class="panel-body">
+          <div *ngIf="errorMsg == true" style="z-index: 999; position:fixed; top: 30%; left: 30%">
+          <div (click)="closeMsg('error')" class="alert alert-danger">
+            <strong>Failed!</strong>
+          </div>
+            </div>
+          <div *ngIf="successMsg == true" style="z-index: 999; position:fixed; top: 30%; left: 30%">
+          <div (click)="closeMsg('success')" class="alert alert-success">
+            <strong>Success!</strong>
+          </div>
+            </div>
       <form [formGroup]="form" novalidate (ngSubmit)="save(form.value, form.valid)" class="form-horizontal">
         <fieldset>
           <div id="legend">
             <legend class="">Sign-Up</legend>
           </div>
+
+          <div class="control-group">
+            <label class="control-label"  for="firstName">First Name</label>
+            <div class="controls">
+              <input type="text" id="firstName" name="firstName" placeholder="" class="form-control" required formControlName="firstName">
+              <div class="alert alert-danger col-md-4" [hidden]="form.controls.firstName.valid || (form.controls.firstName.pristine && !submitted)">
+                <div [hidden]="!firstName.hasError('required')"> First name is required </div>
+            </div>
+          </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="lastName">Last Name</label>
+              <div class="controls">
+                <input type="text" id="lastName" name="lastName" placeholder="" class="form-control" required formControlName="lastName">
+                <div class="alert alert-danger col-md-4" [hidden]="form.controls.lastName.valid || (form.controls.lastName.pristine && !submitted)">
+                  <div [hidden]="!lastName.hasError('required')"> Last name is required </div>
+                </div>
+              </div>
+              </div>
+
           <div class="control-group">
             <!-- Username -->
-            <label class="control-label"  for="username">Username</label>
+            <label class="control-label"  for="userName">Username</label>
             <div class="controls">
-              <input type="text" id="username" name="username" placeholder="" class="form-control" required formControlName="username">
-              <div class="alert alert-danger col-md-4" [hidden]="form.controls.username.valid || (form.controls.username.pristine && !submitted)">
-                <div [hidden]="!username.hasError('minlength')"> Name is required (minimum 5 characters).</div>
-                <div [hidden]="!username.hasError('required')"> Username is required </div>
-                <div [hidden]="!username.hasError('userNameValid')"> Username is already taken </div>
+              <input type="text" id="userName" name="userName" placeholder="" class="form-control" required formControlName="userName">
+              <div class="alert alert-danger col-md-4" [hidden]="form.controls.userName.valid || (form.controls.userName.pristine && !submitted)">
+                <div [hidden]="!userName.hasError('minlength')"> Name is required (minimum 5 characters).</div>
+                <div [hidden]="!userName.hasError('required')"> Username is required </div>
+                <div [hidden]="!userName.hasError('userNameValid')"> Username is already taken </div>
               </div>
               <p class="help-block">Username can contain any letters or numbers, without spaces</p>
             </div>

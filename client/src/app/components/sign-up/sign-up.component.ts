@@ -13,19 +13,23 @@ import { Http, Headers, RequestOptions } from '@angular/http'
 export class SignUpComponent implements OnInit {
 
   form: FormGroup;
-  username = new FormControl("", [Validators.required, Validators.minLength(5)]);
+  firstName = new FormControl("", [Validators.required]);
+  lastName = new FormControl("", [Validators.required]);
+  userName = new FormControl("", [Validators.required, Validators.minLength(5)]);
   email = new FormControl("", [Validators.required, Validators.email]);
   password = new FormControl("", [Validators.required, Validators.minLength(5), this.checkIfPasswordIsValid]);
   password_confirm = new FormControl("", [Validators.required, Validators.minLength(5)]);
   userTaken:boolean = true;
+  errorMsg = false;
+  successMsg = false;
   submitted: boolean;
-  //userService: UserService;
 
   constructor(private fb: FormBuilder, private title: Title, private userService: UserService, private http:Http) {
-    //this.userService = userService;
     this.title.setTitle('Sign-up');
     this.form = fb.group({
-      "username": this.username,
+      "firstName" : this.firstName,
+      "lastName" : this.lastName,
+      "userName": this.userName,
       "email": this.email,
       "password": this.password,
       "password_confirm": this.password_confirm,
@@ -40,7 +44,27 @@ export class SignUpComponent implements OnInit {
 
   save(model: User, isValid: boolean) {
     this.submitted = true;
-    console.log(model, isValid);
+    if (isValid){
+      this.userService.signUserUp(model).subscribe(
+        data => {
+          console.log(data);
+          if(data.error !== null){
+            this.errorMsg = true;
+          } else {
+            this.successMsg = true;
+          }
+          console.log(data.error);
+        }
+      );
+    }
+  }
+
+  closeMsg(theType: String){
+    if(theType === "success"){
+      this.successMsg = false;
+    } else {
+      this.errorMsg = false;
+    }
   }
 
   checkIfMatchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
@@ -76,7 +100,6 @@ export class SignUpComponent implements OnInit {
   }
 
   checkValidUserControl(fieldControl: FormControl) {
-    console.log('Called');
     let userName = fieldControl.value;
     var theResult = false;
     this.checkValidUser(userName).subscribe(

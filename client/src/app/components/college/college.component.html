@@ -1,3 +1,36 @@
 <div *ngIf="theCollege !== null">
-  <h1>{{theCollege.name}}</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 center">
+        <h1 class="jumbotron text-center">{{theCollege.name}}</h1>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <h3>Total Students: {{theCollege.students}}</h3>
+            <h3>State: {{theCollege.state}}</h3>
+            <h3>Tuition: {{theCollege.tuition}}</h3>
+            <h3>Rank: {{theCollege.rank}}</h3>
+          </div>
+        </div>
+        <div *ngIf="!checkProperty()" class="panel panel-default">
+          <div class="panel-body">
+            <form class="form-group" [formGroup]="questionForm" (ngSubmit)="onSubmit(questionForm.value, currentUser.userName)">
+              <label for="question">Question Title:</label>
+              <input type="text" class="form-control" id="question" formControlName="question">
+              <button type="submit" class="btn btn-primary" [disabled]="!questionForm.valid">Submit</button>
+            </form>
+          </div>
+        </div>
+          <ul *ngIf="theQuestions" class="list-group">
+            <li class="list-group-item" *ngFor="let question of theQuestions; let i = index;" (click)="revealComments(i)">
+              <h4>Question: {{question.title}}</h4>
+              <button (click)="removeForm(i)" style="top:0;right:0;" *ngIf="theQuestions[i].owner == theUsername" type="button" class="btn btn-default" aria-label="Left Align">
+                <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+              </button>
+              <p style="display: inline;">User: {{question.owner}}</p>
+            </li>
+          </ul>
+
+        </div>
+    </div>
+  </div>
 </div>

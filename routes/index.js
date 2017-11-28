@@ -23,7 +23,6 @@ router.get('/college/:theCollege', function(req, res){
 	}).then(function(theCollege){
 		res.json(theCollege.dataValues);
 	}).catch(function(){
-		console.log('error');
 		res.json(null);
 	});
 });
@@ -36,10 +35,6 @@ router.delete('/college/:theCollege', function(req, res){
 	}).catch(function(error){
 		res.json({'message': 'error', 'messageContent' : error});
 	});
-});
-
-router.post('/addPost', function(req, res){
-	console.log('Will allow users to post');
 });
 
 router.post('/sendCollegeInfo', function(req, res) {
@@ -88,5 +83,25 @@ router.get('/getCertainColleges', function(req, res){
 		res.json(null);
 	}
 });
+
+
+router.get('/getForms/:theCollege', function(req, res){
+	models.form.findAll({where: {'college' : req.params.theCollege}}).then(function(forms) {
+		res.status(200);
+		res.json(forms);
+	}).catch(function(data) {
+		res.status(500);
+		res.json({'error': 'There was an error', 'errorMessage': data });
+	});
+});
+
+function checkAuthentication(req,res,next) {
+	if (req.isAuthenticated()) {
+		next();
+	} else {
+		res.status(500);
+		res.json({'Message': 'Can\'t perform action because you are not logged in.'});
+	}
+}
 
 module.exports = router;
