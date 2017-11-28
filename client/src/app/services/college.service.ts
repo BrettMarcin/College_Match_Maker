@@ -73,7 +73,16 @@ export class CollegeService {
   removeForm(theForm: string, theCollege: string){
     let headers = new Headers({ 'content-type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.delete('/user/form/' + theForm + '?theCollege=' + theCollege,options)
+    return this.http.post('/user/form?theCollege=' + theCollege,{content: theForm} ,options)
+      .map(response => {
+        return response.json();
+      });
+  }
+
+  getComments(theForm: string, theCollege: string){
+    let headers = new Headers({ 'content-type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post('/user/form/comments/' + theCollege + theCollege,{content: theForm} ,options)
       .map(response => {
         return response.json();
       });
