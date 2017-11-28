@@ -47,7 +47,7 @@ Instructions to set up database:
 * Bootstrap 4
 
 ## Powerpoint:
-* https://drive.google.com/file/d/0Bzh3FDJ2wJwZRlBQUENlWVlyZGs/view
+* https://docs.google.com/presentation/d/1OUEA5dddzI0EnK8z4O-8xsqGpV44Em89cOZrlhOSFdU/edit?usp=sharing
 
 ## Note:
 * You can't edit the master branch directly. Make a new branch and make your edits and make a pull request

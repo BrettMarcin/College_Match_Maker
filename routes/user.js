@@ -88,14 +88,37 @@ module.exports = function(passport, user) {
         });
     });
 
-    router.delete('/form/:title', checkAuthentication, function(req, res){
+    router.post('/addComment', checkAuthentication, function(req, res){
+        models.Comment.create(req.body).then(function() {
+            res.status(200);
+            res.json({'Message':'Success!'});
+        }).catch(function(data) {
+            res.status(500);
+            res.json({ 'error': 'There was an error', 'errorMessage': data });
+        });
+    });
+
+    router.post('/form', checkAuthentication, function(req, res){
         models.form.destroy({
-            where: {'title' : req.params.title, 'owner' : req.user.userName, 'college' : req.query.theCollege}
+            where: {'title' : req.body.content, 'owner' : req.user.userName, 'college' : req.query.theCollege}
         }).then(function(){
             res.json({'message': 'success'});
         }).catch(function(error){
             res.json({'message': 'error', 'messageContent' : error});
         });
+    });
+
+    router.post('/form/comments/:theCollege', checkAuthentication, function(req, res){
+        models.Comment.findAll({
+            where: {'formTitle': req.body.content, 'college' : req.params.theCollege}
+        }).then(function (comments) {
+            res.json(comments);
+        }).catch(function (data) {
+            res.json({'error': 'There was an error', 'errorMessage': data});
+        });
+    } else {
+        res.json(null);
+    }
     });
 
     function checkAuthentication(req,res,next) {

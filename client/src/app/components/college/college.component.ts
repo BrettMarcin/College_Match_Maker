@@ -24,7 +24,8 @@ export class CollegeComponent implements OnInit {
   theUsername: string;
   questionForm: FormGroup;
   theQuestions: CollegeForm[];
-  
+  theQuestionsCommentsReveal: boolean[];
+
   question = new FormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(50)]);
 
   constructor(private router: Router, private fb: FormBuilder, private userService: UserService,collegeService: CollegeService,private route: ActivatedRoute,  private title: Title) {
@@ -54,6 +55,7 @@ export class CollegeComponent implements OnInit {
     this.collegeService.getForms(this.theCollegeParam).subscribe(
       data => {
         this.theQuestions = data;
+        this.theQuestionsCommentsReveal = new Array(data.length).fill(false);
       });
   }
 
@@ -77,14 +79,21 @@ export class CollegeComponent implements OnInit {
   removeForm(i){
     this.collegeService.removeForm(this.theQuestions[i].title, this.theCollege.name).subscribe(
       data => {
-        console.log(data);
-        //this.router.navigate(['/college/' + this.theCollege.name]);
         window.location.reload();
       });
   }
 
-  revealComments(i){
+  addComment(theString){
+    console.log(theString);
+  }
 
+  reveal(i:number){
+    console.log(i);
+    return this.theQuestionsCommentsReveal[i];
+  }
+
+  revealComments(i:number){
+    this.theQuestionsCommentsReveal[i] = true;
   }
 
 }

@@ -7,6 +7,7 @@ import * as d3Scale from 'd3-scale';
 import * as d3Array from 'd3-array';
 import * as d3Axis from 'd3-axis';
 import * as d3Shape from 'd3-shape';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -20,9 +21,9 @@ export class FormDataComponent implements AfterViewChecked {
   form: FormGroup;
   colleges:College[] = [];
   collegeService: CollegeService;
-  size = new FormControl("", Validators.required);
+  size = new FormControl("", [Validators.required, this.checkSizeInput]);
   state = new FormControl("", Validators.required);
-  tuition = new FormControl("", Validators.required);
+  tuition = new FormControl("", [Validators.required, this.checkSizeTuition]);
   firstCollege:College;
   secCollege:College;
 
@@ -38,10 +39,10 @@ export class FormDataComponent implements AfterViewChecked {
   private g: any;
   private color: any;
   private line: d3Shape.Line<[number, number]>;
-  title = 'Colleges Chart!';
-  constructor(fb: FormBuilder, collegeService: CollegeService,) {
+  constructor(fb: FormBuilder, collegeService: CollegeService, private title: Title) {
     this.width = 960 - this.margin.left - this.margin.right;
     this.height = 500 - this.margin.top - this.margin.bottom;
+    this.title.setTitle('Home');
 
     this.collegeService = collegeService;
     this.form = fb.group({
@@ -213,6 +214,28 @@ export class FormDataComponent implements AfterViewChecked {
         .attr("d", this.line);
     }
 
+  }
+
+  checkSizeInput(fieldControl: FormControl) {
+    let number = parseInt(fieldControl.value);
+    if (number > 0) {
+      return null;
+    } else {
+      return {passwordValid: true};
+    }
+  }
+
+  checkSizeTuition(fieldControl: FormControl) {
+    let number = parseInt(fieldControl.value);
+    if (number > 0) {
+      return null;
+    } else {
+      return {passwordValid: true};
+    }
+  }
+
+  getWidth(){
+    return 200 + (this.colleges.length * 10);
   }
 
   logRadio(element: HTMLInputElement): void {

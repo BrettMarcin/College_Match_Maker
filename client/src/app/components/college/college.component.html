@@ -19,18 +19,22 @@
               <button type="submit" class="btn btn-primary" [disabled]="!questionForm.valid">Submit</button>
             </form>
           </div>
-        </div>
-          <ul *ngIf="theQuestions" class="list-group">
-            <li class="list-group-item" *ngFor="let question of theQuestions; let i = index;" (click)="revealComments(i)">
-              <h4>Question: {{question.title}}</h4>
+          <ul *ngIf="theQuestions && theQuestions.length > 0" class="list-group">
+            <div *ngFor="let question of theQuestions; let i = index">
+            <li class="list-group-item">
+
+              <div (click)="revealComments(i)">
+              <h4>{{question.title}}</h4>
               <button (click)="removeForm(i)" style="top:0;right:0;" *ngIf="theQuestions[i].owner == theUsername" type="button" class="btn btn-default" aria-label="Left Align">
                 <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
               </button>
               <p style="display: inline;">User: {{question.owner}}</p>
+              </div>
             </li>
-          </ul>
-
+        </div>
+</ul>
         </div>
     </div>
   </div>
 </div>
+  </div>
